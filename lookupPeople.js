@@ -1,19 +1,18 @@
 function findPeople(client, search) {
-    const queryString = `SELECT * FROM famous_people`;
+    const queryString = `SELECT * FROM famous_people WHERE first_name LIKE $1`;
     let counter = 1;
 
-    client.query(queryString, [], (err, res) => {
+    client.query(queryString, [search], (err, res) => {
         if (err) {
           console.log(err);
           return;
         }
+        console.log('Found ' + res.rows.length + ' people by the name ' + res.rows[0].first_name);
         res.rows.forEach((name) => {
-
-            if(search === name.first_name){
-                console.log(`${counter}.${name.first_name} ${name.last_name} born on: ${name.birthdate.toDateString()}`);
-                counter ++;
-            }
+            console.log(`${counter}.${name.first_name} ${name.last_name} born on: ${name.birthdate.toDateString()}`);
+            counter ++;
         });
-    });
-  }
+
+  })
+}
   exports.findPeople = findPeople;
