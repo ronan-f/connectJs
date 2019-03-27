@@ -18,5 +18,4 @@ function knexSearch(knex, search) {
      })
 }
 
-
   exports.knexSearch = knexSearch;
